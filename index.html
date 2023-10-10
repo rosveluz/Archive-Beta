@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive Beta</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="./qrcodejs-master/qrcode.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <section class="container">
+        <header>QR Code Test Site</header>
+
+    <section class="body-main">
+        <section id="form-section" class="object-style">
+
+            <div id="qrcode"></div>
+
+            <form id="data-form" action="submit_url_here" method="post">
+                <label for="artworkName">Artwork Name:</label>
+                <input type="text" id="artworkName" name="artworkName"><br><br>
+        
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName"><br><br>
+        
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName"><br><br>
+        
+                <label for="middleName">Middle Name:</label>
+                <input type="text" id="middleName" name="middleName"><br><br>
+        
+                <label for="prefix">Prefix:</label>
+                <input type="text" id="prefix" name="prefix"><br><br>
+        
+                <label for="suffix">Suffix:</label>
+                <input type="text" id="suffix" name="suffix"><br><br>
+        
+                <label for="dateCreated">Date Created:</label>
+                <input type="date" id="dateCreated" name="dateCreated"><br><br>
+        
+                <label for="medium">Medium:</label>
+                <input type="text" id="medium" name="medium"><br><br>
+        
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category"><br><br>
+        
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="available">Available</option>
+                    <option value="sold">Sold: Private Collection</option>
+                    <option value="acquired">Acquired: Private Organization</option>
+                    <option value="acquired">Acquired: Government Organization</option>
+                    <!-- Add other options as needed -->
+                </select>
+                
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" accept="image/*" id="photo-upload" name="photos" multiple>
+
+                    <input type="file" accept="image/*" capture="camera" id="photo-capture" name="photos" multiple>
+
+                </form>
+                
+                <br>
+            </form>
+
+            <div id="data-control">
+                <button id="clear-data" class="control-button">Clear</button>
+                <button id="save-data" class="control-button">Save Data</button>
+            </div>
+            
+        </section>
+        <section id="archive-database" class="object-style">Database Dashboard</section>
+    </section>
+
+
+    <footer>
+
+    </footer>
+
+    </section>
+    
+</body>
+</html>

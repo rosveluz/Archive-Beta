@@ -1,0 +1,124 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+    font-family: Arial, Helvetica, sans-serif;
+	vertical-align: baseline;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Styling Main */
+
+.container {
+    padding: 32px 64px;
+}
+
+.object-style {
+    padding: 16px;
+    border-radius: 1rem;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+    -moz-box-shadow: rgba(0,0,0,0.3) 0 1px 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+    background-color: rgb(255, 255, 255);
+}
+
+.body-main {
+    display: flex;
+    gap: 32px;
+    margin: 32px 0;
+}
+
+#qrcode {
+    width: 100%;
+    margin: auto 0;
+}
+
+#data-form {
+    margin-top: 16px;d
+}
+
+#form-section {
+    width: 40%;
+}
+
+#archive-database {
+    width: 100%;
+}
+
+#data-control {
+    display: flex;
+    justify-content: space-between;
+}
+
+.control-button {
+    padding: 12px;
+    border: none;
+    border-radius: .6rem;
+    font-weight: 800;
+}
+
+#save-data {
+    background-color: orange;
+}
+
+/* Form Styling */
+form {
+    max-width: ; /* You can adjust this value as per your requirement */
+    margin: 0 auto; /* Center the form */
+}
+
+label, select {
+    display: block; /* Each element will take the full width */
+    width: 100%; /* Full width of parent */
+    margin-bottom: 4px; /* Space between fields */
+}
+
+input {
+    width: 100%;
+    padding: 6px 2px;
+}
+
+#status {
+    padding: 6px 2px;
+}
