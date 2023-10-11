@@ -18,6 +18,7 @@ time, mark, audio, video {
 	font: inherit;
     font-family: Arial, Helvetica, sans-serif;
 	vertical-align: baseline;
+    text-decoration: none;
 }
 
 *, *:before, *:after {
@@ -48,6 +49,32 @@ table {
 	border-spacing: 0;
 }
 
+h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: rgb(27, 27, 27);
+}
+
+/* Header Nav */
+
+header {
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+}
+
+nav a {
+    color: #df6527;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
 /* Styling Main */
 
 .container {
@@ -71,7 +98,7 @@ table {
 
 #qrcode {
     width: 100%;
-    margin: auto 0;
+    padding: 32px;
 }
 
 #data-form {

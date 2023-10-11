@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive Beta</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script defer src="./qrcodejs-master/qrcode.min.js"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
 
     <section class="container">
-        <header>QR Code Test Site</header>
+        <header>
+            <img src="img/up_cfa-logo.png" alt="UP College of Fine Arts">
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Archive</a>
+                <a href="#">Collections</a>
+            </nav>
+        </header>
 
     <section class="body-main">
         <section id="form-section" class="object-style">
 
-            <div id="qrcode"></div>
+            <h2>Record Artwork Data</h2>
 
             <form id="data-form" action="submit_url_here" method="post">
                 <label for="artworkName">Artwork Name:</label>
@@ -54,16 +65,17 @@
                     <option value="acquired">Acquired: Government Organization</option>
                     <!-- Add other options as needed -->
                 </select>
-                
-                <form action="/upload" method="POST" enctype="multipart/form-data">
-                    <input type="file" accept="image/*" id="photo-upload" name="photos" multiple>
-
-                    <input type="file" accept="image/*" capture="camera" id="photo-capture" name="photos" multiple>
-
-                </form>
-                
                 <br>
             </form>
+
+            <form action="/upload" method="POST" enctype="multipart/form-data" id="image-capture">
+                <input type="file" accept="image/*" id="photo-upload" name="photos" multiple>
+                <input type="file" accept="image/*" capture="camera" id="photo-capture" name="photos" multiple>
+            </form>
+
+            <div id="uploaded-files"></div>
+
+            <div id="qrcode"></div>
 
             <div id="data-control">
                 <button id="clear-data" class="control-button">Clear</button>
@@ -71,15 +83,15 @@
             </div>
             
         </section>
-        <section id="archive-database" class="object-style">Database Dashboard</section>
+        <section id="archive-database" class="object-style">
+            <h2>Database Dashboard</h2>
+        </section>
     </section>
 
 
     <footer>
 
     </footer>
-
-    </section>
     
 </body>
 </html>
