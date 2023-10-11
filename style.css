@@ -152,11 +152,23 @@ input {
 
 
 /* Style for the table */
+
+#artwork-table {
+    table-layout: fixed;
+}
+
+#artwork-table th, #artwork-table td {
+    width: calc(100% / 6); /* Assuming you have 7 columns */
+}
+
+
 table {
     border-collapse: collapse; /* Ensures borders are combined */
     width: 100%; /* Makes table span full width of its container */
     margin-top: 32px;
 }
+
+
 
 /* Style for the table headers */
 th {
@@ -176,6 +188,18 @@ td {
 tr:nth-child(odd) {
     background-color: #f9f9f9;
 }
+
+#archive-database table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#archive-database th, #archive-database td {
+    white-space: nowrap;
+}
+
+
 
 /* Custom Pop-up Window */
 .popup-overlay {
@@ -205,4 +229,54 @@ tr:nth-child(odd) {
     right: 10px;
     top: 5px;
     cursor: pointer;
+}
+
+/* Menu styling for mobile */
+.menu-toggle {
+    display: none; 
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle div {
+    width: 25px;
+    height: 3px;
+    background-color: #df6527;
+    margin: 5px;
+}
+
+/* Mobile view styling */
+@media only screen and (max-width: 768px) { 
+    
+    .container {
+        padding: 24px 12px;
+    }
+
+    header img {
+        width: 220px;
+    }
+    
+    nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+    }
+    
+    nav.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    #form-section, #archive-database {
+        width: 100%;
+    }
+
+    .body-main {
+        flex-direction: column;
+    }
 }
