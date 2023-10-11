@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script defer src="./qrcodejs-master/qrcode.min.js"></script>
-    <script defer src="script.js"></script>
+    <script defer src="main.js"></script>
 </head>
 <body>
 
@@ -83,11 +83,28 @@
             </div>
             
         </section>
+
         <section id="archive-database" class="object-style">
             <h2>Database Dashboard</h2>
+            <table id="artwork-table">
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Artwork Name</th>
+                        <th>Date Created</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Attached Images</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be appended here from JavaScript -->
+                </tbody>
+            </table>
         </section>
-    </section>
 
+    </section>
 
     <footer>
 

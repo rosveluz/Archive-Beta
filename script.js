@@ -8,6 +8,8 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
     correctLevel: QRCode.CorrectLevel.H
 });
 
+var database; // Declare the variable outside of any function
+
 document.addEventListener("DOMContentLoaded", function() {
     const saveDataButton = document.getElementById('save-data');
     const clearDataButton = document.getElementById('clear-data');
@@ -15,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const photoUpload = document.getElementById('photo-upload');
     const photoCapture = document.getElementById('photo-capture');
     const uploadedFiles = [];
-
+    
     function appendFilesToList(files) {
         const uploadedFilesDiv = document.getElementById('uploaded-files');
 
@@ -61,9 +63,13 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     firebase.initializeApp(firebaseConfig);
-    var database = firebase.database();
+    database = firebase.database(); // Initialize the variable here
 
-    async function uploadQRCode() {
+    if (document.getElementById('artwork-table')) { // Check if the element exists on the page
+        populateArtworkTable(); // Call the function to populate the table
+    }
+
+        async function uploadQRCode() {
         return new Promise(async (resolve, reject) => {
             var qrCanvas = document.querySelector('#qrcode canvas');
             qrCanvas.toBlob(async function(blob) {
@@ -143,4 +149,5 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('uploaded-files').innerHTML = ''; // Clear the file list display
         uploadedFiles.length = 0; // Clear the uploadedFiles array
     });
+
 });
