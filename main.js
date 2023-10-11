@@ -1,4 +1,3 @@
-/* main.js */
 // QR code generation
 var qrcode = new QRCode(document.getElementById("qrcode"), {
     text: "https://www.example.com",
@@ -31,38 +30,23 @@ document.addEventListener("DOMContentLoaded", function() {
     const photoUpload = document.getElementById('photo-upload');
     const photoCapture = document.getElementById('photo-capture');
     const uploadedFiles = [];
-    
-    function appendFilesToList(files) {
-        const uploadedFilesDiv = document.getElementById('uploaded-files');
-
-        for (let file of files) {
-            uploadedFiles.push(file);
-            const fileName = file.name;
-            const fileItem = document.createElement('div');
-            fileItem.innerHTML = `
-                ${fileName} <button class="delete-file-btn" data-filename="${fileName}">Delete</button>
-            `;
-            uploadedFilesDiv.appendChild(fileItem);
-            
-            fileItem.querySelector('.delete-file-btn').addEventListener('click', function() {
-                const fileNameToRemove = this.getAttribute('data-filename');
-                const index = uploadedFiles.findIndex(f => f.name === fileNameToRemove);
-                if (index > -1) {
-                    uploadedFiles.splice(index, 1);
-                }
-                uploadedFilesDiv.removeChild(fileItem);
-            });
-        }
-    }
 
     photoUpload.addEventListener('change', function() {
-        appendFilesToList(this.files);
-        this.value = ""; 
+        for (let file of this.files) {
+            uploadedFiles.push(file);
+            const div = document.createElement('div');
+            div.innerText = file.name;
+            document.getElementById('uploaded-files').appendChild(div);
+        }
     });
 
     photoCapture.addEventListener('change', function() {
-        appendFilesToList(this.files);
-        this.value = ""; 
+        for (let file of this.files) {
+            uploadedFiles.push(file);
+            const div = document.createElement('div');
+            div.innerText = file.name;
+            document.getElementById('uploaded-files').appendChild(div);
+        }
     });
 
     async function uploadQRCode() {
@@ -71,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function() {
             qrCanvas.toBlob(async function(blob) {
                 var qrFile = new File([blob], "qrcode.png");
                 var qrRef = firebase.storage().ref('qrcodes/' + Date.now() + '.png');
-
                 await qrRef.put(qrFile).then(async function(snapshot) {
                     await snapshot.ref.getDownloadURL().then(function(downloadURL) {
                         resolve(downloadURL);
@@ -86,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function() {
     async function uploadPhotos(file) {
         return new Promise(async (resolve, reject) => {
             let storageRef = firebase.storage().ref('photos/' + Date.now() + '_' + file.name);
-
             await storageRef.put(file).then(async function(snapshot) {
                 await snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     resolve(downloadURL);
@@ -95,19 +77,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 reject(error);
             });
         });
-    }
+    }    
 
     saveDataButton.addEventListener('click', async function(e) {
         e.preventDefault();
-
         let qrURL = await uploadQRCode();
-
         let photoURLs = [];
         for (let file of uploadedFiles) {
             let uploadedURL = await uploadPhotos(file);
             photoURLs.push(uploadedURL);
         }
-
         let formData = {
             artworkName: form.artworkName.value,
             lastName: form.lastName.value,
@@ -122,19 +101,13 @@ document.addEventListener("DOMContentLoaded", function() {
             photoURLs: photoURLs,
             qrCodeURL: qrURL
         };
-
-        // Push form data to Firebase Realtime Database
         db.ref('artworks/').push(formData).then((snapshot) => {
-            const itemID = snapshot.key;
-            const qrCodeURL = `https://yourwebsite.com/artwork-details?itemID=${itemID}`;
-            qrcode.makeCode(qrCodeURL);
             alert('Data and images saved successfully!');
             form.reset();
+            qrcode.clear();
             document.getElementById('uploaded-files').innerHTML = '';
             uploadedFiles.length = 0;
-        }).catch(error => {
-            console.error("Error saving data: ", error);
-            alert('Failed to save data. Please check the console for more details.');
+            populateArtworkTable();
         });
     });
 
@@ -229,46 +202,37 @@ document.addEventListener("DOMContentLoaded", function() {
         popupContainer.appendChild(popupContent);
         document.body.appendChild(popupContainer);
     }
-    
 
     function populateArtworkTable() {
         console.log("Attempting to populate table...");
         const tableBody = document.getElementById('artwork-table').querySelector('tbody');
         const artworksRef = db.ref('artworks/');
-
         tableBody.innerHTML = "";
 
         artworksRef.on('value', function(snapshot) {
-            if (snapshot.exists()) {
-                snapshot.forEach(function(childSnapshot) {
-                    const data = childSnapshot.val();
-                    const row = tableBody.insertRow();
-                    row.insertCell(0).innerText = data.lastName || '';
-                    row.insertCell(1).innerText = data.firstName || '';
-                    row.insertCell(2).innerText = data.artworkName || '';
-                    row.insertCell(3).innerText = data.dateCreated || '';
-                    row.insertCell(4).innerText = data.category || '';
-                    row.insertCell(5).innerText = data.status || '';
+            snapshot.forEach(function(childSnapshot) {
+                const data = childSnapshot.val();
+                const row = tableBody.insertRow();
+                row.insertCell(0).innerText = data.lastName || '';
+                row.insertCell(1).innerText = data.firstName || '';
+                row.insertCell(2).innerText = data.artworkName || '';
+                row.insertCell(3).innerText = data.dateCreated || '';
+                row.insertCell(4).innerText = data.category || '';
+                row.insertCell(5).innerText = data.status || '';
 
-                    let linkCell = row.insertCell(6);
-                    if (data.photoURLs && data.photoURLs.length > 0) {
-                        let link = document.createElement('a');
-                        link.innerText = `View Images`;
-                        link.href = "#";
-                        link.onclick = function(e) {
-                            e.preventDefault();
-                            openPopup(data);
-                        };
-                        linkCell.appendChild(link);
-                    }
-                });
-            } else {
-                console.error("No data found in Firebase under 'artworks/' path");
-            }
-        }, error => {
-            console.error("Error accessing Firebase:", error);
+                let linkCell = row.insertCell(6);
+                if (data.photoURLs && data.photoURLs.length > 0) {
+                    let link = document.createElement('a');
+                    link.innerText = `View Images`;
+                    link.href = "#";
+                    link.onclick = function(e) {
+                        e.preventDefault();
+                        openPopup(data);
+                    };
+                    linkCell.appendChild(link);
+                }
+            });
         });
     }
-
-    populateArtworkTable(); 
+    populateArtworkTable();
 });
